@@ -6,14 +6,6 @@ var map = new mapboxgl.Map({
     zoom: 10
 });
 
-const layerIds = {
-    explore: ["Sites_v6"],
-    nature: ["Sites_v6", "Parks"],
-    transport: ["Sites_v6", "MRTLines_20240914", "MRTStations_20240914_v1", "AllCyclingPathPCN"],
-    amenities: ["Sites_v6", "HawkerCentres", "PublicLibraries", "ExistingHDBDissolved"],
-    compare: ["Sites_v6"],
-};
-
 // Initialize all layers with opacity set to 0
 map.on('load', function() {
     // 1. Sites_v6 (fill)
@@ -26,7 +18,7 @@ map.on('load', function() {
         },
         paint: {
             "fill-color": "#ffa600",
-            "fill-opacity": 1
+            "fill-opacity": 0
         }
     });
 
@@ -64,7 +56,7 @@ map.on('load', function() {
             "text-color": "#000000", // Text color
             "text-halo-color": "#ffffff", // White halo around text for readability
             "text-halo-width": 2, // Halo width for better contrast
-            "text-opacity": 1,
+            "text-opacity": 0,
         }
     });
 
@@ -81,8 +73,8 @@ map.on('load', function() {
             "circle-radius": 5,  // Adjust as needed
             "circle-stroke-color": "#d50a78",
             "circle-stroke-width": 1,
-            "circle-opacity": 1,
-            "circle-stroke-opacity": 1
+            "circle-opacity": 0,
+            "circle-stroke-opacity": 0
         }
     });
 
@@ -99,8 +91,8 @@ map.on('load', function() {
             "circle-radius": 5,  // Adjust as needed
             "circle-stroke-color": "#0088cd",
             "circle-stroke-width": 1,
-            "circle-opacity": 1,
-            "circle-stroke-opacity": 1
+            "circle-opacity": 0,
+            "circle-stroke-opacity": 0
         }
     });
 
@@ -114,7 +106,7 @@ map.on('load', function() {
         },
         paint: {
             "fill-color": "#00c600",  // Replace with the desired color
-            "fill-opacity": 1
+            "fill-opacity": 0
         }
     });
 
@@ -128,7 +120,7 @@ map.on('load', function() {
         },
         paint: {
             "fill-color": "#b20300",  // Replace with the desired color
-            "fill-opacity": 1
+            "fill-opacity": 0
         }
     });
 
@@ -143,7 +135,7 @@ map.on('load', function() {
         paint: {
             "line-color": "#3038f9",  // Replace with the desired color
             "line-width": 2,
-            "line-opacity": 1}
+            "line-opacity": 0}
     });
 });
 
@@ -161,26 +153,71 @@ function showContent(section, button) {
             <h3>Explore Sites</h3>
             <p>Here you can explore various sites available in the system.</p>
         `;
+        map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
+        map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
+        map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('Parks', 'fill-opacity', 0);
+        map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     } else if (section === 'nature') {
         contentPanel.innerHTML = `
             <h3>Nature Metrics</h3>
             <p>View the nature-related data and metrics for the selected sites.</p>
         `;
+        map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
+        map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
+        map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('Parks', 'fill-opacity', 1);
+        map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     } else if (section === 'transport') {
         contentPanel.innerHTML = `
             <h3>Transport Metrics</h3>
             <p>Access transport metrics such as transit stops, routes, and more.</p>
         `;
+        map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
+        map.setPaintProperty('MRTLines_20240914', 'line-opacity', 1);
+        map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('Parks', 'fill-opacity', 0);
+        map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     } else if (section === 'amenities') {
         contentPanel.innerHTML = `
             <h3>Amenities</h3>
             <p>Discover the available amenities around the sites, including shops, restaurants, etc.</p>
         `;
+        map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
+        map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
+        map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-opacity', 1);
+        map.setPaintProperty('HawkerCentres', 'circle-stroke-opacity', 1);
+        map.setPaintProperty('PublicLibraries', 'circle-opacity', 1);
+        map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 1);
+        map.setPaintProperty('Parks', 'fill-opacity', 0);
+        map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     } else if (section === 'compare') {
         contentPanel.innerHTML = `
             <h3>Compare Sites</h3>
             <p>Compare different sites based on the available data metrics.</p>
         `;
+        map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
+        map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
+        map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-opacity', 0);
+        map.setPaintProperty('HawkerCentres', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-opacity', 0);
+        map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 0);
+        map.setPaintProperty('Parks', 'fill-opacity', 0);
+        map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     }
 
     // Get all buttons in the sidebar to reset their state

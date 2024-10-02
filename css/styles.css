@@ -24,6 +24,7 @@ html, body, #map {
 .sidebar button {
     width: 100%;
     text-align: left;
+    line-height: 1.2;
 }
 
 .sidebar button:hover {
