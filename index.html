@@ -37,31 +37,33 @@
                 <!-- Sidebar Buttons -->
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2" onclick="showContent('explore', this)">
-                            <i class="bi bi-search"></i><br>Explore Sites
+                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('explore', this)">
+                            <i class="bi bi-search"></i><br>Explore All Sites
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2" onclick="showContent('nature', this)">
+                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('nature', this)">
                             <i class="bi bi-tree-fill"></i><br>Nature<br>Metrics
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2" onclick="showContent('transport', this)">
+                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('transport', this)">
                             <i class="bi bi-train-lightrail-front"></i><br>Transport Metrics
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2" onclick="showContent('amenities', this)">
+                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('amenities', this)">
                             <i class="bi bi-shop"></i><br>Amenities
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary" onclick="showContent('compare', this)">
+                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('compare', this)">
                             <i class="bi bi-layout-split"></i><br>Compare Sites
                         </button>
                     </li>
                 </ul>
+
+                <div id="reset-button" class="floating-button">Reset View</div>
 
                 <div class="mt-auto"> <!-- Ensures this content stays at the bottom -->
                     <i class="fas fa-info-circle" data-toggle="tooltip" title="This is some important information!" style="cursor: pointer;"></i>

@@ -233,3 +233,12 @@ function showContent(section, button) {
     button.classList.remove('btn-secondary'); // Remove secondary class
     button.classList.add('btn-dark');         // Add dark class
 }
+
+// Add this code after initializing the map
+document.getElementById('reset-button').addEventListener('click', function() {
+    map.flyTo({
+        center: [103.809038, 1.353424],
+        zoom: 10,
+        essential: true // This animation is considered essential for accessibility
+    });
+});
