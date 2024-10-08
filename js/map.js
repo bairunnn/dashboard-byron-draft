@@ -258,7 +258,7 @@ document.querySelector('.site-icon').addEventListener('click', function() {
         isPlaying = false; // Update state
     } else {
         // Show confirmation popup
-        if (confirm("Music will be played. Do you want to continue?")) {
+        if (confirm("Play music?")) {
             audio.play().then(() => {
                 isPlaying = true; // Update state if playback starts
             }).catch((error) => {
