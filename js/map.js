@@ -244,20 +244,24 @@ document.getElementById('reset-button').addEventListener('click', function() {
     });
 });
 
-const audio = new Audio('/assets/music/sg.opus');
+// Audio part (for fun)
 // const audio = new Audio('./assets/music/gladiators.opus');
-    let isPlaying = false;
 
-    document.querySelector('.site-icon').addEventListener('click', function() {
-        if (isPlaying) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
-        isPlaying = !isPlaying;  // Toggle between play and pause
-    });
+const audio = new Audio('https://raw.githubusercontent.com/bairunnn/dashboard-byron-draft/main/assets/music/sg.opus');
+audio.preload = 'auto';
 
-    // Optional: Reset isPlaying when the audio ends
-    audio.addEventListener('ended', function() {
-        isPlaying = false;
-    });
+let isPlaying = false;
+
+document.querySelector('.site-icon').addEventListener('click', function() {
+    if (isPlaying) {
+        audio.pause();
+    } else {
+        audio.play();
+    }
+    isPlaying = !isPlaying;  // Toggle between play and pause
+});
+
+// Optional: Reset isPlaying when the audio ends
+audio.addEventListener('ended', function() {
+    isPlaying = false;
+});
