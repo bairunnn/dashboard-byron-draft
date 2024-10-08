@@ -1,4 +1,5 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiYnlyb25ubiIsImEiOiJjbTB2NG9qajYxOTE1Mmtwd3Q1aDd5cjM2In0.K6SRujI45VvXnG1vfcwbwA';
+
 var map = new mapboxgl.Map({
     container: 'map', // ID of the div where the map will be placed
     style: 'mapbox://styles/byronnn/cm15ugzyg00dg01pc3ucid3od', // Mapbox style
@@ -242,3 +243,20 @@ document.getElementById('reset-button').addEventListener('click', function() {
         essential: true // This animation is considered essential for accessibility
     });
 });
+
+const audio = new Audio('/assets/music/gladiators.mp3');
+    let isPlaying = false;
+
+    document.querySelector('.site-icon').addEventListener('click', function() {
+        if (isPlaying) {
+            audio.pause();
+        } else {
+            audio.play();
+        }
+        isPlaying = !isPlaying;  // Toggle between play and pause
+    });
+
+    // Optional: Reset isPlaying when the audio ends
+    audio.addEventListener('ended', function() {
+        isPlaying = false;
+    });
