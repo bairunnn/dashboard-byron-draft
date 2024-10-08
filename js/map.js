@@ -244,8 +244,8 @@ document.getElementById('reset-button').addEventListener('click', function() {
     });
 });
 
-// const audio = new Audio('/assets/music/sg.opus');
-const audio = new Audio('./assets/music/gladiators.opus');
+const audio = new Audio('/assets/music/sg.opus');
+// const audio = new Audio('./assets/music/gladiators.opus');
     let isPlaying = false;
 
     document.querySelector('.site-icon').addEventListener('click', function() {
