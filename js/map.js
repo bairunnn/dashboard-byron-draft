@@ -248,17 +248,24 @@ document.getElementById('reset-button').addEventListener('click', function() {
 // const audio = new Audio('./assets/music/gladiators.opus');
 
 const audio = new Audio('https://raw.githubusercontent.com/bairunnn/dashboard-byron-draft/main/assets/music/sg.opus');
-audio.preload = 'auto';
+audio.preload = 'auto'; // Preload the audio
 
 let isPlaying = false;
 
 document.querySelector('.site-icon').addEventListener('click', function() {
     if (isPlaying) {
         audio.pause();
+        isPlaying = false; // Update state
     } else {
-        audio.play();
+        // Show confirmation popup
+        if (confirm("Music will be played. Do you want to continue?")) {
+            audio.play().then(() => {
+                isPlaying = true; // Update state if playback starts
+            }).catch((error) => {
+                console.error('Playback failed:', error);
+            });
+        }
     }
-    isPlaying = !isPlaying;  // Toggle between play and pause
 });
 
 // Optional: Reset isPlaying when the audio ends
