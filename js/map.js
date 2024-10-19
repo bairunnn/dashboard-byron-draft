@@ -15,7 +15,7 @@ map.on('load', function() {
         type: "fill",
         source: {
             type: "geojson",
-            data: "assets/layers/Sites_v6.geojson"
+            data: "assets/layers/sites_v6_ranked.geojson"
         },
         paint: {
             "fill-color": "#ffa600",

@@ -1,3 +1,21 @@
+const projectCoordinates = {
+    "Ang Mo Kio": [103.84515494925807, 1.3749890228765957],
+    "Bedok 1": [103.94608866823155, 1.3142854046882988],
+    "Bedok 2": [103.94623958879255, 1.3160236296175223],
+    "Bedok 3": [103.91262169426813, 1.3228167899235626],
+    "Bukit Batok": [103.73684050482362, 1.3549231649923992],
+    "Geylang": [103.88026946399526, 1.3274615720494429],
+    "Jurong West": [103.72633447850544, 1.3269696626372136],
+    "Kallang Whampoa 1": [103.85789935268545, 1.3230457714217692],
+    "Kallang Whampoa 2": [103.86413883505325, 1.3054341769958007],
+    "Kallang Whampoa 3": [103.87295369391586, 1.317987651613951],
+    "Pasir Ris 1": [103.94922500668866, 1.3769121070832524],
+    "Pasir Ris 2": [103.95054451955161, 1.377151401249985],
+    "Sengkang 1": [103.87919606616396, 1.3943307856805016],
+    "Sengkang 2": [103.87612903093439, 1.4009138100721623],
+    "Woodlands": [103.77255516423922, 1.4355446479153366]
+};
+
 function showContent(section, button) {
     if (section === 'explore') {
         showExploreContent();
@@ -30,7 +48,7 @@ let sitesData = null; // Global variable to hold GeoJSON data
 
 // Function to load GeoJSON data
 async function loadGeoJsonData() {
-    const response = await fetch('assets/layers/Sites_v6.geojson');
+    const response = await fetch('assets/layers/Sites_v6_ranked.geojson');
     if (response.ok) {
         sitesData = await response.json();
         console.log('Sites data loaded:', sitesData);
