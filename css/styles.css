@@ -79,3 +79,35 @@ html, body, #map {
     z-index: 1000; /* Ensure the score counter is always visible */
     display: none; /* Initially hidden */
   }
+
+
+.form-check.form-switch {
+    border-bottom: 2px solid #ded9ca; /* Light gray color for the border */
+    padding-bottom: 10px; /* Add some padding for spacing */
+    margin-bottom: 15px; /* Add margin to separate from the dropdown */
+}
+
+.form-check-input:checked {
+    background-color: #a5a296; /* Custom color when checked */
+    border-color: #a5a296; /* Custom border color */
+}
+
+.project-details-table {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 600px;
+    font-size: 0.8rem;
+}
+
+.project-details-table td, .project-details-table th {
+    padding: 4px 8px; /* Reduce padding to make the rows smaller */
+    border: 1px solid #dee2e6; /* Maintain the border */
+}
+
+.project-details-table tr:nth-child(odd) {
+    background-color: white; /* White for odd rows */
+}
+
+.project-details-table tr:nth-child(even) {
+    background-color: #f3f1ed; /* Custom stripe color for even rows */
+}

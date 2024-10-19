@@ -46,6 +46,7 @@ map.on('load', function() {
             type: "geojson",
             data: "assets/layers/MRTStations_20240914_v1.geojson"
         },
+        minzoom: 12, // Only show MRT stations at zoom level 12 and above
         layout: {
             "text-field": ["get", "name"], // Display the name of the MRT station
             "text-font": ["Barlow Bold"], 

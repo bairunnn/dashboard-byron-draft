@@ -10,6 +10,12 @@ function showContent(section, button) {
     } else if (section === 'compare') {
         showCompareContent();
     }
+    
+    map.flyTo({
+        center: [103.809038, 1.353424],
+        zoom: 10,
+        essential: true // ensures smooth zooming experience
+    });
 
     const buttons = document.querySelectorAll('.sidebar .nav button');
     buttons.forEach(btn => {
