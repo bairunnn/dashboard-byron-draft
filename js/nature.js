@@ -86,6 +86,25 @@ function showNatureContent() {
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
+        })
+        .on("click", function(event, d) {
+            // Change dropdown selection
+            projectDropdown.value = d.properties.Project_Name;
+
+            // Update ranking
+            const rank = sortedData.findIndex(feature => feature.properties.Project_Name === d.properties.Project_Name) + 1;
+            rankingParagraph.textContent = `Ranking: ${rank} out of ${sortedData.length}`;
+
+            // Update bar colors based on selected project
+            bars.attr("fill", d => d.properties.Project_Name === projectDropdown.value ? "#28c600" : "#e1e0dc");
+
+            // Zoom to selected project on the map
+            const coordinates = projectCoordinates[d.properties.Project_Name];
+            map.flyTo({
+                center: coordinates,
+                zoom: 15,
+                essential: true
+            });
         });
 
     // Dropdown listener
