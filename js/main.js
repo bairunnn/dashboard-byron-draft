@@ -48,7 +48,7 @@ let sitesData = null; // Global variable to hold GeoJSON data
 
 // Function to load GeoJSON data
 async function loadGeoJsonData() {
-    const response = await fetch('assets/layers/Sites_v6_ranked.geojson');
+    const response = await fetch('assets/layers/sites_v6_ranked.geojson');
     if (response.ok) {
         sitesData = await response.json();
         console.log('Sites data loaded:', sitesData);

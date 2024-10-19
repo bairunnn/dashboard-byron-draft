@@ -146,6 +146,7 @@ document.getElementById('reset-button').addEventListener('click', function() {
     map.flyTo({
         center: [103.809038, 1.353424],
         zoom: 10,
+        bearing: 0,
         essential: true
     });
 });
