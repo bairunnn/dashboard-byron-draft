@@ -44,32 +44,32 @@ function showExploreContent() {
                 <table class="table table-bordered table-striped project-details-table">
                     <tbody>
                         <tr>
-                            <td><strong>Units launched</strong></td>
+                            <td><strong>Total number of units launched</strong></td>
                             <td>${Units}</td>
                         </tr>
                         <tr>
                             <td><strong>Distance to nearest Hawker Centre</strong></td>
-                            <td>${NEAR_HAWKER.toFixed(2)} m</td>
+                            <td>${NEAR_HAWKER.toFixed(2)} M</td>
                         </tr>
                         <tr>
                             <td><strong>Distance to nearest MRT</strong></td>
-                            <td>${NEAR_MRT.toFixed(2)} m</td>
+                            <td>${NEAR_MRT.toFixed(2)} M</td>
                         </tr>
                         <tr>
                             <td><strong>Area of parkland within 1KM buffer of site</strong></td>
-                            <td>${NParks_KM2.toFixed(2)}</td>
+                            <td>${NParks_KM2.toFixed(2)} KM²</td>
                         </tr>
                         <tr>
                             <td><strong>Distance to nearest library</strong></td>
-                            <td>${NEAR_LIB.toFixed(2)} m</td>
+                            <td>${NEAR_LIB.toFixed(2)} M</td>
                         </tr>
                         <tr>
                             <td><strong>Length of cycling paths within 1KM buffer of site</strong></td>
-                            <td>${CYCLE_M.toFixed(2)} m</td>
+                            <td>${CYCLE_M.toFixed(2)} M</td>
                         </tr>
                         <tr>
                             <td><strong>Area of mature housing estates within 1KM buffer of site</strong></td>
-                            <td>${MATURE_KM2.toFixed(2)}</td>
+                            <td>${MATURE_KM2.toFixed(2)} KM²</td>
                         </tr>
                     </tbody>
                 </table>

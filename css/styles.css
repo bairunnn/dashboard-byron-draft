@@ -178,3 +178,16 @@ cursor: pointer;
 .site-icon:hover svg {
     transform: scale(1.1); /* Enlarge the icon slightly */
 }
+
+.tooltip {
+    position: absolute;
+    text-align: left;
+    width: auto;
+    padding: 5px;
+    font: 12px "Barlow";
+    background: #f3f1ed;
+    border: 0px;
+    border-radius: 2px;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+}

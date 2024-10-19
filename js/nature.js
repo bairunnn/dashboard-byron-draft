@@ -58,6 +58,11 @@ function showNatureContent() {
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x));
 
+    // Create a tooltip div
+    const tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+    
     // Bars
     const bars = chart.selectAll(".bar")
         .data(sortedData)
@@ -68,7 +73,20 @@ function showNatureContent() {
         .attr("y", d => y(d.properties.Project_Name))
         .attr("width", d => x(d.properties.NParks_KM2))
         .attr("height", y.bandwidth())
-        .attr("fill", "#28c600"); // Default color
+        .attr("fill", "#28c600") // Default color
+        .on("mouseover", function(event, d) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tooltip.html(`${d.properties.Project_Name}<br>Area of surrounding parkland: ${d.properties.NParks_KM2.toFixed(2)} KM²`)
+                .style("left", (event.pageX + 5) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function() {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
     // Dropdown listener
     projectDropdown.addEventListener('change', function () {
@@ -84,7 +102,7 @@ function showNatureContent() {
             if (isSelected) {
                 // Update ranking
                 const rank = sortedData.findIndex(feature => feature.properties.Project_Name === selectedProjectName) + 1;
-                rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length}`;
+                rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length} projects`;
                 return "#28c600"; // Highlight selected project
             } else {
                 return "#e1e0dc"; // Other projects grey
