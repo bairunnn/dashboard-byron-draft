@@ -101,7 +101,7 @@ function checkMobileDevice() {
 
     // Check if the device is mobile (less than 768px for mobile, 768px to 1024px for tablets)
     if (width < 768) {
-        alert("You are viewing this dashboard on mobile. Please use a laptop or desktop browser instead.");
+        alert("You are viewing this dashboard on mobile. Please use a laptop / desktop / VR browser instead. Good for your eyes.");
     }
 }
 
