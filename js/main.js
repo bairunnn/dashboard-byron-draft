@@ -94,3 +94,16 @@ window.onclick = function(event) {
         }, 300); 
     }
 }
+
+// Function to check for mobile devices
+function checkMobileDevice() {
+    const width = window.innerWidth;
+
+    // Check if the device is mobile (less than 768px for mobile, 768px to 1024px for tablets)
+    if (width < 768) {
+        alert("You are viewing this dashboard on mobile. Please use a laptop or desktop browser instead.");
+    }
+}
+
+// Run the check when the page loads
+window.onload = checkMobileDevice;
