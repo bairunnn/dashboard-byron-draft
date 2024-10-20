@@ -37,3 +37,7 @@ sites <- sites %>%
 ```{r}
 write_csv(sites, "sites_v7_ranked.csv")
 ```
+
+[1] "OBJECTID" "Project_Name" "Units" "NEAR_HAWKER" "NEAR_MRT"\
+[6] "NParks_KM2" "NEAR_LIB" "CYCLE_M" "MATURE_KM2" "Shape_Length"\
+[11] "Shape_Area" "rank_Units" "rank_NEAR_HAWKER" "rank_NEAR_MRT" "rank_NParks_KM2" [16] "rank_NEAR_LIB" "rank_CYCLE_M" "rank_MATURE_KM2"

@@ -4,6 +4,8 @@ Main interface CSS
 Navigation menu CSS
 Explore section CSS
 Nature section CSS
+Transport section CSS
+Media queries
 */
 
 
@@ -24,8 +26,10 @@ html, body, #map {
 }
 
 .content-panel {
-    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
     width: 30%;
+    scroll-behavior: smooth;
 }
 
 #map {
@@ -212,6 +216,19 @@ cursor: pointer;
     transition: opacity 0.1s ease;
 }
 
+/* Transport section */
+.transport-buttons .btn-primary {
+    background-color: #e1e0dc; /* Inactive state */
+    color: black; /* Text color for inactive state */
+    border: none; /* Remove border */
+}
+
+.transport-buttons .btn-primary.active {
+    background-color: #0054b7; /* Active state */
+    color: white; /* Text color for active state */
+    border: none; /* Remove border */
+}
+
 /* Media queries */
 
 @media (max-width: 1100px) {
@@ -230,10 +247,10 @@ cursor: pointer;
     }
 
     /* Optionally reduce size of the siteIcon to fit the smaller sidebar */
-    .site-icon svg {
+    /* .site-icon svg {
         width: 100%;
         height: 100%;
-    }
+    } */
 
     .sidebar-header {
         display: none;

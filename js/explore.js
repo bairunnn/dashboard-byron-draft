@@ -107,6 +107,7 @@ function showExploreContent() {
     map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 0);
     map.setPaintProperty('Parks', 'fill-opacity', 0);
     map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
+    map.setPaintProperty('AllCyclingPathPCN', 'line-opacity', 0);
 
     toggleMRT.addEventListener('change', function() {
         if (this.checked) {

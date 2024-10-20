@@ -7,20 +7,21 @@ function showNatureContent() {
         <select id="project-dropdown" class="form-select mb-3">
             <option value="">-- Select a Project --</option>
         </select>
+        <p>Area of surrounding parkland:</p>
         <div id="bar-chart"></div>
         <p id="ranking" style="margin-top: 20px;"></p>
     `;
 
-    const projectDropdown = document.getElementById('project-dropdown');
-    const rankingParagraph = document.getElementById('ranking');
+    let projectDropdown = document.getElementById('project-dropdown');
+    let rankingParagraph = document.getElementById('ranking');
 
     // Sort data based on NParks_KM2 in descending order
     let sortedData = sitesData.features.sort((a, b) => b.properties.NParks_KM2 - a.properties.NParks_KM2);
 
     if (sortedData) {
         sortedData.forEach(feature => {
-            const projectName = feature.properties.Project_Name;
-            const option = document.createElement('option');
+            let projectName = feature.properties.Project_Name;
+            let option = document.createElement('option');
             option.value = projectName;
             option.textContent = projectName;
             projectDropdown.appendChild(option);
@@ -32,26 +33,26 @@ function showNatureContent() {
         // Clear the previous SVG
         d3.select("#bar-chart").select("svg").remove();
 
-        const containerWidth = document.getElementById('bar-chart').clientWidth;
-        const height = 400;
+        let containerWidth = document.getElementById('bar-chart').clientWidth;
+        let height = 400;
 
-        const svg = d3.select("#bar-chart")
+        let svg = d3.select("#bar-chart")
             .append("svg")
             .attr("width", containerWidth) // Full width
             .attr("height", height);
 
-        const margin = { top: 20, right: 20, bottom: 30, left: 120 };
-        const width = containerWidth - margin.left - margin.right;
+        let margin = { top: 20, right: 20, bottom: 30, left: 120 };
+        let width = containerWidth - margin.left - margin.right;
 
-        const chart = svg.append("g")
+        let chart = svg.append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // Scales
-        const x = d3.scaleLinear()
+        let x = d3.scaleLinear()
             .range([0, width])
             .domain([0, d3.max(sortedData, d => d.properties.NParks_KM2)]);
 
-        const y = d3.scaleBand()
+        let y = d3.scaleBand()
             .range([0, height - margin.top - margin.bottom])
             .domain(sortedData.map(d => d.properties.Project_Name))
             .padding(0.1);
@@ -68,8 +69,13 @@ function showNatureContent() {
             .style("font-size", "50%")
             .style("font-family", "Barlow");
     
+    // Create a tooltip div
+    let tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
     // Bars
-    const bars = chart.selectAll(".bar")
+    let bars = chart.selectAll(".bar")
         .data(sortedData)
         .enter()
         .append("rect")
@@ -97,14 +103,14 @@ function showNatureContent() {
             projectDropdown.value = d.properties.Project_Name;
 
             // Update ranking
-            const rank = sortedData.findIndex(feature => feature.properties.Project_Name === d.properties.Project_Name) + 1;
+            let rank = sortedData.findIndex(feature => feature.properties.Project_Name === d.properties.Project_Name) + 1;
             rankingParagraph.textContent = `Ranking: ${rank} out of ${sortedData.length}`;
 
             // Update bar colors based on selected project
             bars.attr("fill", d => d.properties.Project_Name === projectDropdown.value ? "#28c600" : "#e1e0dc");
 
             // Zoom to selected project on the map
-            const coordinates = projectCoordinates[d.properties.Project_Name];
+            let coordinates = projectCoordinates[d.properties.Project_Name];
             map.flyTo({
                 center: coordinates,
                 zoom: 15,
@@ -114,7 +120,7 @@ function showNatureContent() {
 
         // Dropdown listener
     projectDropdown.addEventListener('change', function () {
-        const selectedProjectName = this.value;
+        let selectedProjectName = this.value;
 
         // Update bar colors based on selected project
         bars.attr("fill", d => {
@@ -122,10 +128,10 @@ function showNatureContent() {
                 rankingParagraph.textContent = ""; // Clear ranking if no project selected
                 return "#28c600"; // All green if no project is selected
             }
-            const isSelected = d.properties.Project_Name === selectedProjectName;
+            let isSelected = d.properties.Project_Name === selectedProjectName;
             if (isSelected) {
                 // Update ranking
-                const rank = sortedData.findIndex(feature => feature.properties.Project_Name === selectedProjectName) + 1;
+                let rank = sortedData.findIndex(feature => feature.properties.Project_Name === selectedProjectName) + 1;
                 rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length} projects`;
                 return "#28c600"; // Highlight selected project
             } else {
@@ -134,7 +140,7 @@ function showNatureContent() {
         });
 
         if (selectedProjectName && projectCoordinates[selectedProjectName]) {
-            const coordinates = projectCoordinates[selectedProjectName];
+            let coordinates = projectCoordinates[selectedProjectName];
             map.flyTo({
                 center: coordinates,
                 zoom: 15,
@@ -165,4 +171,5 @@ function showNatureContent() {
     map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 0);
     map.setPaintProperty('Parks', 'fill-opacity', 1);
     map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
+    map.setPaintProperty('AllCyclingPathPCN', 'line-opacity', 0);
 }
