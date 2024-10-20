@@ -34,7 +34,7 @@ function showNatureContent() {
         .attr("height", 400);
 
     const margin = { top: 20, right: 20, bottom: 30, left: 120 };
-    const width = 600 - margin.left - margin.right;
+    const width = svg.node().clientWidth - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
     const chart = svg.append("g")
@@ -52,11 +52,15 @@ function showNatureContent() {
 
     // Axes
     chart.append("g")
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y))
+        .style("font-size", "80%")
+        .style("font-family", "Barlow");
 
     chart.append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(x))
+        .style("font-size", "50%")
+        .style("font-family", "Barlow");
 
     // Create a tooltip div
     const tooltip = d3.select("body").append("div")
@@ -77,8 +81,8 @@ function showNatureContent() {
         .on("mouseover", function(event, d) {
             tooltip.transition()
                 .duration(200)
-                .style("opacity", .9);
-            tooltip.html(`${d.properties.Project_Name}<br>Area of surrounding parkland: ${d.properties.NParks_KM2.toFixed(2)} KM²`)
+                .style("opacity", .95);
+            tooltip.html(`<b>${d.properties.Project_Name}</b><br>Area of surrounding parkland:<br>${d.properties.NParks_KM2.toFixed(2)} KM²`)
                 .style("left", (event.pageX + 5) + "px")
                 .style("top", (event.pageY - 28) + "px");
         })
