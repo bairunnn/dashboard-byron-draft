@@ -28,44 +28,45 @@ function showNatureContent() {
     }
 
     // Create the bar chart using D3
-    const svg = d3.select("#bar-chart")
-        .append("svg")
-        .attr("width", 400)
-        .attr("height", 400);
+    function renderChart() {
+        // Clear the previous SVG
+        d3.select("#bar-chart").select("svg").remove();
 
-    const margin = { top: 20, right: 20, bottom: 30, left: 120 };
-    const width = svg.node().clientWidth - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+        const containerWidth = document.getElementById('bar-chart').clientWidth;
+        const height = 400;
 
-    const chart = svg.append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+        const svg = d3.select("#bar-chart")
+            .append("svg")
+            .attr("width", containerWidth) // Full width
+            .attr("height", height);
 
-    // Scales
-    const x = d3.scaleLinear()
-        .range([0, width])
-        .domain([0, d3.max(sortedData, d => d.properties.NParks_KM2)]);
+        const margin = { top: 20, right: 20, bottom: 30, left: 120 };
+        const width = containerWidth - margin.left - margin.right;
 
-    const y = d3.scaleBand()
-        .range([0, height])
-        .domain(sortedData.map(d => d.properties.Project_Name))
-        .padding(0.1);
+        const chart = svg.append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Axes
-    chart.append("g")
-        .call(d3.axisLeft(y))
-        .style("font-size", "80%")
-        .style("font-family", "Barlow");
+        // Scales
+        const x = d3.scaleLinear()
+            .range([0, width])
+            .domain([0, d3.max(sortedData, d => d.properties.NParks_KM2)]);
 
-    chart.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x))
-        .style("font-size", "50%")
-        .style("font-family", "Barlow");
+        const y = d3.scaleBand()
+            .range([0, height - margin.top - margin.bottom])
+            .domain(sortedData.map(d => d.properties.Project_Name))
+            .padding(0.1);
 
-    // Create a tooltip div
-    const tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+        // Axes
+        chart.append("g")
+            .call(d3.axisLeft(y))
+            .style("font-size", "80%")
+            .style("font-family", "Barlow");
+
+        chart.append("g")
+            .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
+            .call(d3.axisBottom(x))
+            .style("font-size", "50%")
+            .style("font-family", "Barlow");
     
     // Bars
     const bars = chart.selectAll(".bar")
@@ -111,7 +112,7 @@ function showNatureContent() {
             });
         });
 
-    // Dropdown listener
+        // Dropdown listener
     projectDropdown.addEventListener('change', function () {
         const selectedProjectName = this.value;
 
@@ -147,7 +148,14 @@ function showNatureContent() {
             });
         }
     });
+    }
 
+    // Initial chart render
+    renderChart();
+
+    // Redraw the chart on window resize
+    window.addEventListener('resize', renderChart);
+    
     map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
     map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
     map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
