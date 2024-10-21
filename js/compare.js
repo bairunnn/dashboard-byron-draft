@@ -149,11 +149,14 @@ function showPrices() {
             <button id="compare-rankings" class="btn btn-primary" onclick="showRankings()">Compare rankings</button>
             <button id="compare-price" class="btn btn-primary active" onclick="showPrices()">Compare Resale Prices</button>
         </div>
-        <p>Compare trends for resale prices from 2017 - 2024</p>
+        <p>Compare trends for resale prices from 2017 - 2024 across towns and with the national average.
+        <br><b>Index: 2017 = 100</b>
+        <br>Data: <a href="https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view" target="_blank" rel="noopener noreferrer" style="color: #b1a88a;">HDB Resale Flat transactions</a> from 2017 - 2024
+        </p>
         <div id="town-container" style="display: flex; align-items: center;">
             <div id="town-dropdown" style="margin-right: 20px;">
                 <label for="town-select">Select Town:</label>
-                <select id="town-select">
+                <select id="town-select" class="form-select mb-3">
                     <option value="" selected disabled>Select a town</option>
                 </select>
             </div>
@@ -183,10 +186,9 @@ function showPrices() {
         });
 
         // Set dimensions for the SVG
-        const margin = {top: 20, right: 70, bottom: 30, left: 40};  // Increase the right margin
+        const margin = {top: 20, right: 130, bottom: 30, left: 40};  // Increase the right margin
         const width = window.innerWidth * 0.6 - margin.left - margin.right; // 60% of the viewport width
-        const height = 400 - margin.top - margin.bottom;
-
+        const height = window.innerHeight * 0.6 - margin.top - margin.bottom;
 
         // Create the SVG element
         const svg = d3.select("#line-chart")
@@ -216,7 +218,7 @@ function showPrices() {
 
         svg.append("g")
             .attr("class", "y-axis")
-            .call(d3.axisLeft(y).ticks(11)); // Use 9 ticks for intervals of 10 (70 to 150)
+            .call(d3.axisLeft(y).ticks(11));
 
         // Define a line generator
         const line = d3.line()
@@ -232,7 +234,10 @@ function showPrices() {
             .style("padding", "5px")
             .style("border-radius", "5px")
             .style("visibility", "hidden")
-            .style("font-size", "12px");
+            .style("font-size", "16px");
+
+        // Track selected towns
+        const selectedTowns = new Set();
 
         // Draw the lines for each town, initially set to default colors
         const townLines = {};
@@ -243,12 +248,12 @@ function showPrices() {
                 .datum(townData)
                 .attr("fill", "none")
                 .attr("stroke", color)
-                .attr("stroke-width", 1.5)
+                .attr("stroke-width", 2.5)
                 .attr("d", line)
                 .on("mouseover", function() {
                     tooltip.style("visibility", "visible")
                         .text(townName);
-                    d3.select(this).attr("stroke-width", 3); // Highlight the line on hover
+                    d3.select(this).attr("stroke-width", 4); // Highlight the line on hover
                 })
                 .on("mousemove", function(event) {
                     tooltip
@@ -257,7 +262,23 @@ function showPrices() {
                 })
                 .on("mouseout", function() {
                     tooltip.style("visibility", "hidden");
-                    d3.select(this).attr("stroke-width", 1.5); // Reset stroke width
+                    d3.select(this).attr("stroke-width", 2.5); // Reset stroke width
+                })
+                .on("click", function() {
+                    // Toggle selection
+                    const isSelected = selectedTowns.has(townName);
+                    if (isSelected) {
+                        // Deselect town
+                        selectedTowns.delete(townName);
+                        d3.select(this).attr("stroke", townName === "Singapore" ? "#af3330" : "#c8c8c3");
+                        svg.select(`.label-${townName.replace(/\s+/g, '-')}`).remove();
+                        d3.select(`#selected-${townName.replace(/\s+/g, '-')}`).remove(); // Remove the town entry from selected
+                    } else {
+                        // Select town
+                        selectedTowns.add(townName);
+                        d3.select(this).attr("stroke", "#5e5d5b");
+                        updateSelectedTowns(townName);
+                    }
                 });
 
             // Store the path for future updates
@@ -268,9 +289,9 @@ function showPrices() {
                 svg.append("text")
                     .datum(townData[townData.length - 1]) // Position text at the last point
                     .attr("x", x(2024) + 5) // Position it slightly to the right of the last year
-                    .attr("y", y(townData[townData.length - 1].rebased_psf))
+                    .attr("y", y(townData[townData.length - 1].rebased_psf) - 10)
                     .attr("fill", "#af3330")
-                    .attr("font-size", "12px")
+                    .attr("font-size", "16px")
                     .attr("dy", "1em")
                     .text("Singapore");
             }
@@ -282,6 +303,7 @@ function showPrices() {
 
             // Display the selected town with a cross to deselect it
             const townEntry = selectedTownsDiv.append("div")
+                .attr("id", `selected-${selectedTown.replace(/\s+/g, '-')}`) // Unique ID for removal
                 .attr("class", "selected-town")
                 .style("margin-right", "10px")
                 .style("padding", "5px 10px")
@@ -291,8 +313,9 @@ function showPrices() {
                 .text(`${selectedTown} ×`)
                 .on("click", function() {
                     // Deselect town and remove the entry
-                    d3.select(this).remove();
+                    selectedTowns.delete(selectedTown);
                     townLines[selectedTown].attr("stroke", selectedTown === "Singapore" ? "#af3330" : "#c8c8c3"); // Reset color
+                    d3.select(this).remove(); // Remove the entry
 
                     // Remove the label for the town
                     svg.select(`.label-${selectedTown.replace(/\s+/g, '-')}`).remove();
@@ -307,18 +330,29 @@ function showPrices() {
                 .datum(townData[townData.length - 1]) // Position text at the last point
                 .attr("class", `label-${selectedTown.replace(/\s+/g, '-')}`) // Unique class for removal
                 .attr("x", x(2024) + 5) // Position it slightly to the right of the last year
-                .attr("y", y(townData[townData.length - 1].rebased_psf))
+                .attr("y", y(townData[townData.length - 1].rebased_psf) - 10)
                 .attr("fill", "#5e5d5b")
-                .attr("font-size", "12px")
+                .attr("font-size", "16px")
                 .attr("dy", "1em")
-                .text(selectedTown);
+                .text(selectedTown)
+                .on("click", function() {
+                    // Deselect town when clicking the label
+                    selectedTowns.delete(selectedTown);
+                    townLines[selectedTown].attr("stroke", selectedTown === "Singapore" ? "#af3330" : "#c8c8c3"); // Reset color
+                    d3.select(`#selected-${selectedTown.replace(/\s+/g, '-')}`).remove(); // Remove the town entry from selected
+                    d3.select(this).remove(); // Remove the label
+                });
         }
 
-        // Event listener for town selection
+        // Event listener for town selection from the dropdown
         townSelect.on("change", function() {
             const selectedTown = d3.select(this).property("value");
             if (selectedTown) {
-                updateSelectedTowns(selectedTown);
+                if (!selectedTowns.has(selectedTown)) {
+                    selectedTowns.add(selectedTown);
+                    updateSelectedTowns(selectedTown);
+                    townLines[selectedTown].attr("stroke", "#5e5d5b"); // Change line color
+                }
             }
         });
     });
