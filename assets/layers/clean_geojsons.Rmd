@@ -1,0 +1,48 @@
+---
+title: "Clean geojsons"
+author: "Byron Huang"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(sf)
+library(stringr)
+```
+
+## Clean parks
+
+```{r}
+parks_geojson <- st_read("Parks.geojson")
+
+parks_geojson_cleaned <- parks_geojson %>%
+  mutate(Description = gsub("<[^>]+>", "", Description))
+```
+
+```{r}
+parks_df <- parks_geojson_cleaned %>%
+  mutate(Park_Name = sub(".*NAME (.*?) N_RESERVE.*", "\\1", Description)) %>%
+  select(Name, Park_Name)
+
+st_write(parks_df, "Parks_cleaned.geojson")
+```
+
+## Clean libraries
+
+```{r}
+libs_geojson <- st_read("PublicLibraries.geojson")
+
+libs_geojson_cleaned <- libs_geojson %>%
+  mutate(Description = gsub("<[^>]+>", "", Description))
+```
+
+```{r}
+libs_df <- libs_geojson_cleaned %>%
+  mutate(Library_Name = sub(".*NAME (.*?) ADDRESSPOSTALCODE.*", "\\1", Description)) %>%
+  select(Name, Library_Name)
+
+st_write(libs_df, "PublicLibraries_cleaned.geojson")
+```

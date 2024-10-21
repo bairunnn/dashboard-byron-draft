@@ -23,6 +23,38 @@ map.on('load', function() {
         }
     });
 
+    // Initialize the popup for tooltips
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mousemove', 'Sites_v6', function(e) {
+        // Check if fill-opacity is greater than 0 (layer is visible)
+        var opacity = map.getPaintProperty('Sites_v6', 'fill-opacity');
+        if (opacity > 0) {
+            // Get the Project_Name and Units from the hovered feature
+            var projectName = e.features[0].properties.Project_Name;
+            var units = e.features[0].properties.Units;
+
+            // Create a popup and set its position to the hovered polygon
+            popup
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div style="font-size: 1.4em; font-family: 'Barlow', sans-serif;">
+                        <strong>${projectName}</strong><br>
+                        Units: ${units}
+                    </div>`)
+                .addTo(map);
+        }
+    });
+
+    // Remove the popup when the mouse leaves the polygon
+    map.on('mouseleave', 'Sites_v6', function() {
+        popup.remove();
+    });
+
+
     // 2. MRTLines_20240914 (line)
     map.addLayer({
         id: "MRTLines_20240914",
@@ -68,7 +100,7 @@ map.on('load', function() {
         type: "circle",
         source: {
             type: "geojson",
-            data: "assets/layers/HawkerCentres.geojson"
+            data: "assets/layers/HawkerCentres_cleaned.geojson"
         },
         paint: {
             "circle-color": "#c64a06",  // Replace with the desired color
@@ -80,13 +112,36 @@ map.on('load', function() {
         }
     });
 
+    map.on('mousemove', 'HawkerCentres', function(e) {
+        // Check if fill-opacity is greater than 0 (layer is visible)
+        var opacity = map.getPaintProperty('HawkerCentres', 'circle-opacity');
+        if (opacity > 0) {
+            // Get the Project_Name and Units from the hovered feature
+            var hawName = e.features[0].properties.Hawker_Name;
+
+            // Create a popup and set its position to the hovered polygon
+            popup
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div style="font-size: 1.2em; font-family: 'Barlow', sans-serif;">
+                        <strong>${hawName}</strong><br>
+                    </div>`)
+                .addTo(map);
+        }
+    });
+
+    // Remove the popup when the mouse leaves the polygon
+    map.on('mouseleave', 'HawkerCentres', function() {
+        popup.remove();
+    });
+
     // 5. PublicLibraries (circle)
     map.addLayer({
         id: "PublicLibraries",
         type: "circle",
         source: {
             type: "geojson",
-            data: "assets/layers/PublicLibraries.geojson"
+            data: "assets/layers/PublicLibraries_cleaned.geojson"
         },
         paint: {
             "circle-color": "#0088cd",  // Replace with the desired color
@@ -98,18 +153,64 @@ map.on('load', function() {
         }
     });
 
+    map.on('mousemove', 'PublicLibraries', function(e) {
+        // Check if fill-opacity is greater than 0 (layer is visible)
+        var opacity = map.getPaintProperty('PublicLibraries', 'circle-opacity');
+        if (opacity > 0) {
+            // Get the Project_Name and Units from the hovered feature
+            var libName = e.features[0].properties.Library_Name;
+
+            // Create a popup and set its position to the hovered polygon
+            popup
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div style="font-size: 1.2em; font-family: 'Barlow', sans-serif;">
+                        <strong>${libName}</strong><br>
+                    </div>`)
+                .addTo(map);
+        }
+    });
+
+    // Remove the popup when the mouse leaves the polygon
+    map.on('mouseleave', 'PublicLibraries', function() {
+        popup.remove();
+    });
+
     // 6. Parks (fill)
     map.addLayer({
         id: "Parks",
         type: "fill",
         source: {
             type: "geojson",
-            data: "assets/layers/Parks.geojson"
+            data: "assets/layers/Parks_cleaned.geojson"
         },
         paint: {
             "fill-color": "#00c600",  // Replace with the desired color
             "fill-opacity": 0
         }
+    });
+
+    map.on('mousemove', 'Parks', function(e) {
+        // Check if fill-opacity is greater than 0 (layer is visible)
+        var opacity = map.getPaintProperty('Parks', 'fill-opacity');
+        if (opacity > 0) {
+            // Get the Project_Name and Units from the hovered feature
+            var parkName = e.features[0].properties.Park_Name;
+
+            // Create a popup and set its position to the hovered polygon
+            popup
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div style="font-size: 1.2em; font-family: 'Barlow', sans-serif;">
+                        <strong>${parkName}</strong><br>
+                    </div>`)
+                .addTo(map);
+        }
+    });
+
+    // Remove the popup when the mouse leaves the polygon
+    map.on('mouseleave', 'Parks', function() {
+        popup.remove();
     });
 
     // 7. ExistingHDBDissolved (fill)
