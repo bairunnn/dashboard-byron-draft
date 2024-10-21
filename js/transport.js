@@ -93,13 +93,13 @@ function showTransportContent() {
                 .call(d3.axisBottom(x))
                 .style("font-size", "50%")
                 .style("font-family", "Barlow");
-            
 
             // Create a tooltip div
             let tooltip = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
+                .attr("class", "tooltip")
+                .style("opacity", 0);
 
+            // Create the bars without animation first
             let bars = chart.selectAll(".bar")
                 .data(sortedData)
                 .enter()
@@ -107,10 +107,9 @@ function showTransportContent() {
                 .attr("class", "bar")
                 .attr("x", 0)
                 .attr("y", d => y(d.properties.Project_Name))
-                .attr("width", d => x(d.properties[dataProperty]))
+                .attr("width", 0) // Start width at 0 for animation
                 .attr("height", y.bandwidth())
-                .attr(
-                    "fill", d => {
+                .attr("fill", d => {
                     // Check the active comparison type and assign the corresponding color
                     if (comparisonType === 'mrt') {
                         return "#0054b7";  // mrt color
@@ -119,45 +118,52 @@ function showTransportContent() {
                     } else {
                         return "#0054b7";  // Default fallback color if needed
                     }
-                })
-                .on("mouseover", function(event, d) {
-                    tooltip.transition()
-                        .duration(200)
-                        .style("opacity", .95);
-                    
-                    // Update tooltip content based on the comparison type
-                    let tooltipContent;
-                    if (dataProperty === 'NEAR_MRT') {
-                        tooltipContent = `<b>${d.properties.Project_Name}</b><br>Distance to nearest MRT:<br>${d.properties[dataProperty].toFixed(2)} M`;
-                    } else if (dataProperty === 'CYCLE_M') {
-                        tooltipContent = `<b>${d.properties.Project_Name}</b><br>Length of cycling paths in 1 KM buffer:<br>${d.properties[dataProperty].toFixed(2)} M`;
-                    }
-                    
-                    tooltip.html(tooltipContent)
-                        .style("left", (event.pageX + 5) + "px")
-                        .style("top", (event.pageY - 28) + "px");
-                })
-                .on("mouseout", function() {
-                    tooltip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-                })
-                .on("click", function(event, d) {
-                    projectDropdown.value = d.properties.Project_Name;
-                    let rank = sortedData.findIndex(feature => feature.properties.Project_Name === d.properties.Project_Name) + 1;
-                    rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length}`;
-                    bars.attr("fill", d => {
-                        let activeButton = document.querySelector('.btn.active').id; // Get the active button's ID
-                        let selectedColor = activeButton === 'compare-mrt' ? '#0054b7' : (activeButton === 'compare-cycling' ? '#e16d7c' : '#0054b7');
-                        return d.properties.Project_Name === projectDropdown.value ? selectedColor : "#e1e0dc";
-                    });
-                    let coordinates = projectCoordinates[d.properties.Project_Name];
-                    map.flyTo({
-                        center: coordinates,
-                        zoom: 15,
-                        essential: true
-                    });
                 });
+
+            // Animate the width after they have been created
+            bars.transition()
+                .duration(700) // Animation duration
+                .attr("width", d => x(d.properties[dataProperty])); // Animate to final width
+
+            // Tooltip and event handling logic
+            bars.on("mouseover", function(event, d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .95);
+
+                // Update tooltip content based on the comparison type
+                let tooltipContent;
+                if (dataProperty === 'NEAR_MRT') {
+                    tooltipContent = `<b>${d.properties.Project_Name}</b><br>Distance to nearest MRT:<br>${d.properties[dataProperty].toFixed(2)} M`;
+                } else if (dataProperty === 'CYCLE_M') {
+                    tooltipContent = `<b>${d.properties.Project_Name}</b><br>Length of cycling paths in 1 KM buffer:<br>${d.properties[dataProperty].toFixed(2)} M`;
+                }
+
+                tooltip.html(tooltipContent)
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
+            .on("click", function(event, d) {
+                projectDropdown.value = d.properties.Project_Name;
+                let rank = sortedData.findIndex(feature => feature.properties.Project_Name === d.properties.Project_Name) + 1;
+                rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length}`;
+                bars.attr("fill", d => {
+                    let activeButton = document.querySelector('.btn.active').id; // Get the active button's ID
+                    let selectedColor = activeButton === 'compare-mrt' ? '#0054b7' : (activeButton === 'compare-cycling' ? '#e16d7c' : '#0054b7');
+                    return d.properties.Project_Name === projectDropdown.value ? selectedColor : "#e1e0dc";
+                });
+                let coordinates = projectCoordinates[d.properties.Project_Name];
+                map.flyTo({
+                    center: coordinates,
+                    zoom: 15,
+                    essential: true
+                });
+            });
 
             projectDropdown.addEventListener('change', function() {
                 let selectedProjectName = this.value;

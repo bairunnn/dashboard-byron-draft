@@ -82,7 +82,7 @@ function showNatureContent() {
         .attr("class", "bar")
         .attr("x", 0)
         .attr("y", d => y(d.properties.Project_Name))
-        .attr("width", d => x(d.properties.NParks_KM2))
+        .attr("width", 0)
         .attr("height", y.bandwidth())
         .attr("fill", "#28c600") // Default color
         .on("mouseover", function(event, d) {
@@ -118,8 +118,13 @@ function showNatureContent() {
             });
         });
 
+        // Transition to animate bars to their full width
+        bars.transition()
+        .duration(700)
+        .attr("width", d => x(d.properties.NParks_KM2));
+
         // Dropdown listener
-    projectDropdown.addEventListener('change', function () {
+        projectDropdown.addEventListener('change', function () {
         let selectedProjectName = this.value;
 
         // Update bar colors based on selected project
