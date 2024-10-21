@@ -109,7 +109,17 @@ function showTransportContent() {
                 .attr("y", d => y(d.properties.Project_Name))
                 .attr("width", d => x(d.properties[dataProperty]))
                 .attr("height", y.bandwidth())
-                .attr("fill", "#0054b7")
+                .attr(
+                    "fill", d => {
+                    // Check the active comparison type and assign the corresponding color
+                    if (comparisonType === 'mrt') {
+                        return "#0054b7";  // mrt color
+                    } else if (comparisonType === 'cycling') {
+                        return "#e16d7c";  // cycling color
+                    } else {
+                        return "#0054b7";  // Default fallback color if needed
+                    }
+                })
                 .on("mouseover", function(event, d) {
                     tooltip.transition()
                         .duration(200)
@@ -135,8 +145,12 @@ function showTransportContent() {
                 .on("click", function(event, d) {
                     projectDropdown.value = d.properties.Project_Name;
                     let rank = sortedData.findIndex(feature => feature.properties.Project_Name === d.properties.Project_Name) + 1;
-                    rankingParagraph.textContent = `Ranking: ${rank} out of ${sortedData.length}`;
-                    bars.attr("fill", d => d.properties.Project_Name === projectDropdown.value ? "#0054b7" : "#e1e0dc");
+                    rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length}`;
+                    bars.attr("fill", d => {
+                        let activeButton = document.querySelector('.btn.active').id; // Get the active button's ID
+                        let selectedColor = activeButton === 'compare-mrt' ? '#0054b7' : (activeButton === 'compare-cycling' ? '#e16d7c' : '#0054b7');
+                        return d.properties.Project_Name === projectDropdown.value ? selectedColor : "#e1e0dc";
+                    });
                     let coordinates = projectCoordinates[d.properties.Project_Name];
                     map.flyTo({
                         center: coordinates,
@@ -148,20 +162,47 @@ function showTransportContent() {
             projectDropdown.addEventListener('change', function() {
                 let selectedProjectName = this.value;
                 bars.attr("fill", d => {
-                    if (selectedProjectName === "") {
-                        rankingParagraph.textContent = "";
-                        return "#0054b7";
-                    }
-                    let isSelected = d.properties.Project_Name === selectedProjectName;
-                    if (isSelected) {
-                        let rank = sortedData.findIndex(feature => feature.properties.Project_Name === selectedProjectName) + 1;
-                        rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length} projects`;
-                        return "#0054b7";
+                    if (comparisonType === "") {
+                        if (selectedProjectName === "") {
+                            rankingParagraph.textContent = "";
+                            return "#0054b7";
+                        } 
+                        let isSelected = d.properties.Project_Name === selectedProjectName;
+                        if (isSelected) {
+                            let rank = sortedData.findIndex(feature => feature.properties.Project_Name === selectedProjectName) + 1;
+                            rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length} projects`;
+                            return "#0054b7";
+                        } else {
+                            return "#e1e0dc";
+                        }
+                    } else if (comparisonType === "mrt") {
+                        if (selectedProjectName === "") {
+                            rankingParagraph.textContent = "";
+                            return "#0054b7";
+                        } 
+                        let isSelected = d.properties.Project_Name === selectedProjectName;
+                        if (isSelected) {
+                            let rank = sortedData.findIndex(feature => feature.properties.Project_Name === selectedProjectName) + 1;
+                            rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length} projects`;
+                            return "#0054b7";
+                        } else {
+                            return "#e1e0dc";
+                        }
                     } else {
-                        return "#e1e0dc";
+                        if (selectedProjectName === "") {
+                            rankingParagraph.textContent = "";
+                            return "#e16d7c";
+                        } 
+                        let isSelected = d.properties.Project_Name === selectedProjectName;
+                        if (isSelected) {
+                            let rank = sortedData.findIndex(feature => feature.properties.Project_Name === selectedProjectName) + 1;
+                            rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length} projects`;
+                            return "#e16d7c";
+                        } else {
+                            return "#e1e0dc";
+                        }
                     }
                 });
-
                 if (selectedProjectName && projectCoordinates[selectedProjectName]) {
                     let coordinates = projectCoordinates[selectedProjectName];
                     map.flyTo({

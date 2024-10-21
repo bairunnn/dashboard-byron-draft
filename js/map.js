@@ -71,9 +71,9 @@ map.on('load', function() {
             data: "assets/layers/HawkerCentres.geojson"
         },
         paint: {
-            "circle-color": "#d50a78",  // Replace with the desired color
+            "circle-color": "#c64a06",  // Replace with the desired color
             "circle-radius": 5,  // Adjust as needed
-            "circle-stroke-color": "#d50a78",
+            "circle-stroke-color": "#c64a06",
             "circle-stroke-width": 1,
             "circle-opacity": 0,
             "circle-stroke-opacity": 0
@@ -135,7 +135,7 @@ map.on('load', function() {
             data: "assets/layers/AllCyclingPathPCN.geojson"
         },
         paint: {
-            "line-color": "#3038f9",  // Replace with the desired color
+            "line-color": "#e16d7c",  // Replace with the desired color
             "line-width": 2,
             "line-opacity": 0}
     });

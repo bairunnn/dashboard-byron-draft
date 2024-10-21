@@ -104,7 +104,7 @@ function showNatureContent() {
 
             // Update ranking
             let rank = sortedData.findIndex(feature => feature.properties.Project_Name === d.properties.Project_Name) + 1;
-            rankingParagraph.textContent = `Ranking: ${rank} out of ${sortedData.length}`;
+            rankingParagraph.textContent = `Ranking: #${rank} out of ${sortedData.length}`;
 
             // Update bar colors based on selected project
             bars.attr("fill", d => d.properties.Project_Name === projectDropdown.value ? "#28c600" : "#e1e0dc");

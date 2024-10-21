@@ -223,8 +223,36 @@ cursor: pointer;
     border: none; /* Remove border */
 }
 
-.transport-buttons .btn-primary.active {
+.transport-buttons #compare-mrt.active {
     background-color: #0054b7; /* Active state */
+    color: white; /* Text color for active state */
+    border: none; /* Remove border */
+}
+
+.transport-buttons #compare-cycling.active {
+    background-color: #e16d7c; /* Active state */
+    color: white; /* Text color for active state */
+    border: none; /* Remove border */
+}
+
+/* Amenities section */
+/* General button styling for inactive state */
+.amenities-buttons .btn-primary {
+    background-color: #e1e0dc; /* Inactive state */
+    color: black; /* Text color for inactive state */
+    border: none; /* Remove border */
+}
+
+/* Specific active state for Compare Hawkers button */
+.amenities-buttons #compare-hawker.active {
+    background-color: #c64a06; /* Active state for Compare Hawkers */
+    color: white; /* Text color for active state */
+    border: none; /* Remove border */
+}
+
+/* Specific active state for Compare Libraries button */
+.amenities-buttons #compare-lib.active {
+    background-color: #0088cd; /* Active state for Compare Libraries */
     color: white; /* Text color for active state */
     border: none; /* Remove border */
 }
