@@ -154,7 +154,7 @@ function showNatureContent() {
         } else {
             map.flyTo({
                 center: [103.809038, 1.353424],
-                zoom: 10,
+                zoom: 10.5,
                 essential: true
             });
         }
@@ -177,4 +177,15 @@ function showNatureContent() {
     map.setPaintProperty('Parks', 'fill-opacity', 1);
     map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     map.setPaintProperty('AllCyclingPathPCN', 'line-opacity', 0);
+
+    // Add click event to Sites_v6 layer to select a project
+    map.on('click', 'Sites_v6', function(e) {
+        if (e.features.length > 0) {
+            const clickedProjectName = e.features[0].properties.Project_Name;
+            projectDropdown.value = clickedProjectName; // Update dropdown selection
+
+            // Trigger the change event manually to update ranking
+            projectDropdown.dispatchEvent(new Event('change'));
+        }
+    });
 }

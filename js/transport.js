@@ -219,13 +219,12 @@ function showTransportContent() {
                 } else {
                     map.flyTo({
                         center: [103.809038, 1.353424],
-                        zoom: 10,
+                        zoom: 10.5,
                         essential: true
                     });
                 }
             });
         }
-
         drawChart();
     }
     
@@ -274,11 +273,20 @@ function showTransportContent() {
     });
 
     // Initial chart render
-    renderChart('NEAR_MRT', 'asc');
+    renderChart('NEAR_MRT', 'asc', 'mrt');
 
+    map.on('click', 'Sites_v6', function(e) {
+        if (e.features.length > 0) {
+            const clickedProjectName = e.features[0].properties.Project_Name;
+            projectDropdown.value = clickedProjectName; // Update dropdown selection
+
+            // Trigger the change event manually to update ranking
+            projectDropdown.dispatchEvent(new Event('change'));
+        }
+    });
+    
     // Redraw the chart on window resize
     window.addEventListener('resize', function() {
         renderChart(projectDropdown.value ? (descriptionParagraph.textContent.includes("MRT/LRT") ? 'NEAR_MRT' : 'CYCLE_M') : 'NEAR_MRT', 'asc');
     });
-
 }

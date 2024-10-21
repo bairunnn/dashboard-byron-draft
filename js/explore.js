@@ -91,9 +91,20 @@ function showExploreContent() {
         } else {
             map.flyTo({
                 center: [103.809038, 1.353424],
-                zoom: 10,
+                zoom: 10.5,
                 essential: true // this ensures smooth zooming experience
             });
+        }
+    });
+
+    // Add click event to Sites_v6 layer to select a project
+    map.on('click', 'Sites_v6', function(e) {
+        if (e.features.length > 0) {
+            const clickedProjectName = e.features[0].properties.Project_Name;
+            projectDropdown.value = clickedProjectName; // Update dropdown selection
+
+            // Trigger the change event manually to update project details
+            projectDropdown.dispatchEvent(new Event('change'));
         }
     });
 

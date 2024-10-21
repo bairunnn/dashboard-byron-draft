@@ -33,7 +33,7 @@ function showContent(section) {
 
     map.flyTo({
         center: [103.809038, 1.353424],
-        zoom: 10,
+        zoom: 10.5,
         essential: true // ensures smooth zooming experience
     });
 }

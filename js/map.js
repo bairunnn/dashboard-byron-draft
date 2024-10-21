@@ -4,8 +4,12 @@ var map = new mapboxgl.Map({
     container: 'map', // ID of the div where the map will be placed
     style: 'mapbox://styles/byronnn/cm15ugzyg00dg01pc3ucid3od', // Mapbox style
     center: [103.809038, 1.353424], // Initial position [lng, lat]
-    zoom: 10
+    zoom: 10.5
 });
+
+// Add navigation control (zoom buttons)
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-right');
 
 // Initialize all layers with opacity set to 0
 map.on('load', function() {
@@ -267,7 +271,7 @@ map.on('load', function() {
 document.getElementById('reset-button').addEventListener('click', function() {
     map.flyTo({
         center: [103.809038, 1.353424],
-        zoom: 10,
+        zoom: 10.5,
         bearing: 0,
         essential: true
     });

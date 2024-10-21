@@ -35,8 +35,8 @@ function showCompareContent() {
             <button id="compare-price" class="btn btn-primary" onclick="showPrices()">Compare resale prices</button>
         </div>
         <p>Compare the rankings for each variable across the different projects.</p>
-        <p>Cells shaded in <span style="background-color: #d7d4c3; padding: 2px;">gold</span> represent the higher ranking.</p>
-        <table id="comparison-table" class="table">
+        <p>Cells shaded in <span style="background-color: #d7d4c3; padding: 2px;">gold</span> represent the higher (better) ranking.</p>
+        <table id="comparison-table" class="table" style="width: 80%;">
             <thead>
                 <tr>
                     <th>Variable</th>
@@ -65,9 +65,9 @@ function showCompareContent() {
                             <label class="form-check-label" for="toggle-nature">Nature ranking</label>
                         </div>
                     </td>
-                    <td id="site1-nature"></td>
-                    <td id="site2-nature"></td>
-                    <td id="site3-nature"></td>
+                    <td id="site1-nature" class="value-cell"></td>
+                    <td id="site2-nature" class="value-cell"></td>
+                    <td id="site3-nature" class="value-cell"></td>
                 </tr>
                 <tr>
                     <td>
@@ -76,9 +76,9 @@ function showCompareContent() {
                             <label class="form-check-label" for="toggle-mrt">MRT ranking</label>
                         </div>
                     </td>
-                    <td id="site1-mrt"></td>
-                    <td id="site2-mrt"></td>
-                    <td id="site3-mrt"></td>
+                    <td id="site1-mrt" class="value-cell"></td>
+                    <td id="site2-mrt" class="value-cell"></td>
+                    <td id="site3-mrt" class="value-cell"></td>
                 </tr>
                 <tr>
                     <td>
@@ -87,9 +87,9 @@ function showCompareContent() {
                             <label class="form-check-label" for="toggle-cycling">Cycling ranking</label>
                         </div>
                     </td>
-                    <td id="site1-cycling"></td>
-                    <td id="site2-cycling"></td>
-                    <td id="site3-cycling"></td>
+                    <td id="site1-cycling" class="value-cell"></td>
+                    <td id="site2-cycling" class="value-cell"></td>
+                    <td id="site3-cycling" class="value-cell"></td>
                 </tr>
                 <tr>
                     <td>
@@ -98,9 +98,9 @@ function showCompareContent() {
                             <label class="form-check-label" for="toggle-hawker">Hawker ranking</label>
                         </div>
                     </td>
-                    <td id="site1-hawker"></td>
-                    <td id="site2-hawker"></td>
-                    <td id="site3-hawker"></td>
+                    <td id="site1-hawker" class="value-cell"></td>
+                    <td id="site2-hawker" class="value-cell"></td>
+                    <td id="site3-hawker" class="value-cell"></td>
                 </tr>
                 <tr>
                     <td>
@@ -109,9 +109,9 @@ function showCompareContent() {
                             <label class="form-check-label" for="toggle-library">Library ranking</label>
                         </div>
                     </td>
-                    <td id="site1-library"></td>
-                    <td id="site2-library"></td>
-                    <td id="site3-library"></td>
+                    <td id="site1-library" class="value-cell"></td>
+                    <td id="site2-library" class="value-cell"></td>
+                    <td id="site3-library" class="value-cell"></td>
                 </tr>
             </tbody>
         </table>

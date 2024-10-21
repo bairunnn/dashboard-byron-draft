@@ -5,6 +5,7 @@ Navigation menu CSS
 Explore section CSS
 Nature section CSS
 Transport section CSS
+Compare section CSS
 Media queries
 */
 
@@ -276,6 +277,13 @@ cursor: pointer;
     background-color: #bd7385; /* Active state for Compare Libraries */
     color: white; /* Text color for active state */
     border: none; /* Remove border */
+}
+
+/* Compare section */
+
+.value-cell {
+    font-size: 1.2em; /* Adjust the size as needed */
+    /* Add any additional styles if needed */
 }
 
 /* Media queries */
