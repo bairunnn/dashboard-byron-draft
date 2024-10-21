@@ -16,7 +16,7 @@ function startMiniGame() {
     // Update the content panel with mini game content
     contentPanel.innerHTML = `
         <div style="text-align: center; font-family: 'Barlow', sans-serif; padding: 20px;">
-            <div style="display: inline-block; padding: 10px; font-size: 2.5em; font-weight: bold; color: black; animation: rainbow 8s linear infinite;">
+            <div style="display: inline-block; padding: 10px; font-size: 2.5em; font-weight: bold; color: black; animation: rainbow 12s linear infinite;">
                 THE BTO LOTTERY
             </div>
             <h3 style="font-size: 2em;">Try your luck at balloting<br>for a BTO!</h3>
@@ -29,7 +29,7 @@ function startMiniGame() {
             @keyframes rainbow {
                 0% { background-color: orange; }
                 25% { background-color: yellow; }
-                50% { background-color: green; }
+                50% { background-color: #00f100; }
                 75% { background-color: yellow; }
                 100% { background-color: orange; }
             }
