@@ -1,83 +1,59 @@
 function startMiniGame() {
-    // Create a new window for the mini game
-    const gameWindow = window.open("", "Ballot Game", "width=400,height=400");
+    // Set all map properties to 0
+    map.setPaintProperty('Sites_v6', 'fill-opacity', 0);
+    map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
+    map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
+    map.setPaintProperty('HawkerCentres', 'circle-opacity', 0);
+    map.setPaintProperty('HawkerCentres', 'circle-stroke-opacity', 0);
+    map.setPaintProperty('PublicLibraries', 'circle-opacity', 0);
+    map.setPaintProperty('PublicLibraries', 'circle-stroke-opacity', 0);
+    map.setPaintProperty('Parks', 'fill-opacity', 0);
+    map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
+
+    // Get the content panel and map panel elements
+    let contentPanel = document.getElementById('description-panel');
     
-    // Create content for the game window
-    gameWindow.document.write(`
-        <html>
-            <head>
-                <title>Ballot Game</title>
-                <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap" rel="stylesheet">
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-                <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
-                <style>
-                    body { 
-                        font-family: 'Barlow', sans-serif; 
-                        text-align: center; 
-                        padding: 20px; 
-                        position: relative; /* Ensure canvas can be positioned absolutely */
-                    }
-                    button { 
-                        margin-top: 10px; 
-                        font-family: 'Barlow', sans-serif; 
-                        background-color: #ded9ca !important; /* Set custom background color with !important */
-                        border: none; /* Remove default border */
-                        color: #333; /* Set text color for better contrast */
-                    }
-                    button:hover {
-                        background-color: #d0c4b4; /* Optional: Change background color on hover */
-                    }
-                    @keyframes rainbow {
-                        0% { color: red; }
-                        14% { color: orange; }
-                        28% { color: yellow; }
-                        42% { color: green; }
-                        57% { color: blue; }
-                        71% { color: indigo; }
-                        85% { color: violet; }
-                        100% { color: red; }
-                    }
-                    .rainbow-text {
-                        animation: rainbow 8s linear infinite;
-                        font-size: 2.5em;
-                        font-weight: bold;
-                    }
-                </style>
-            </head>
-            <body>
-                <canvas id="confetti-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
-                <div class="rainbow-text">THE BTO LOTTERY</div>
-                <h3>Try your luck at balloting for a BTO!</h3>
-                <br>
-                <button id="ballot-button" class="btn">Ballot!</button>
-                <p><br>Outcome:</p>
-                <p id="result"></p>
-                <p id="attempts">You have tried: 0 times</p>
-                <script>
-                    const jsConfetti = new JSConfetti(); // Initialize jsConfetti
-                    let clickCount = 0;
+    // Update the content panel with mini game content
+    contentPanel.innerHTML = `
+        <div style="text-align: center; font-family: 'Barlow', sans-serif; padding: 20px;">
+            <div style="display: inline-block; padding: 10px; font-size: 2.5em; font-weight: bold; color: black; animation: rainbow 8s linear infinite;">
+                THE BTO LOTTERY
+            </div>
+            <h3 style="font-size: 2em;">Try your luck at balloting<br>for a BTO!</h3>
+            <button id="ballot-button" class="btn" style="margin-top: 10px; background-color: #ded9ca; border: none; color: #333;">Ballot!</button>
+            <p><br>Outcome:</p>
+            <p id="result"></p>
+            <p id="attempts">You have tried: 0 times</p>
+        </div>
+        <style>
+            @keyframes rainbow {
+                0% { background-color: orange; }
+                25% { background-color: yellow; }
+                50% { background-color: green; }
+                75% { background-color: yellow; }
+                100% { background-color: orange; }
+            }
+        </style>
+    `;
 
-                    // Handle ballot button click
-                    document.getElementById('ballot-button').addEventListener('click', function() {
-                        clickCount++;
-                        const randomChance = Math.random(); // Generates a number between 0 and 1
-                        const resultText = randomChance < 0.2 ? "Congrats! Your ballot is successful!<br>Enjoy your married life!" : "Your ballot is not successful!<br>There goes your $10!";
-                        document.getElementById('result').innerHTML = resultText;
-                        document.getElementById('attempts').innerHTML = "You have tried: " + clickCount + " times";
+    // Initialize jsConfetti and set up event listener
+    const jsConfetti = new JSConfetti(); // Initialize jsConfetti
+    let clickCount = 0;
 
-                        // If the ballot is successful, trigger confetti
-                        if (randomChance < 0.2) {
-                            jsConfetti.addConfetti({
-                                emojis: ['🌈', '⚡️', '🍆', '💫'],
-                                emojiSize: 40,
-                            });
-                        }
-                    });
-                </script>
-            </body>
-        </html>
-    `);
+    // Handle ballot button click
+    document.getElementById('ballot-button').addEventListener('click', function() {
+        clickCount++;
+        const randomChance = Math.random(); // Generates a number between 0 and 1
+        const resultText = randomChance < 0.2 ? "Congrats! Your ballot is successful!<br>Enjoy your married life! And your 99-year lease!" : "Your ballot is NOT successful!<br>There goes your $10!";
+        document.getElementById('result').innerHTML = resultText;
+        document.getElementById('attempts').innerHTML = "You have tried: " + clickCount + " times";
 
-    // Close the document to render the content
-    gameWindow.document.close();
+        // If the ballot is successful, trigger confetti
+        if (randomChance < 0.2) {
+            jsConfetti.addConfetti({
+                emojis: ['🚻', '🏠', '🍆', '💫'],
+                emojiSize: 40,
+            });
+        }
+    });
 }

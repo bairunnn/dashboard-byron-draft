@@ -48,37 +48,37 @@
                 <!-- Sidebar Buttons -->
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('explore', this)">
+                        <button class="btn btn-secondary mb-2 w-100" data-section="explore">
                             <i class="bi bi-search icon"></i>
                             <header class="sidebar-header">Explore Sites</header>
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('nature', this)">
+                        <button class="btn btn-secondary mb-2 w-100" data-section="nature">
                             <i class="bi bi-tree-fill icon"></i>
                             <header class="sidebar-header">Nature</header>
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('transport', this)">
+                        <button class="btn btn-secondary mb-2 w-100" data-section="transport">
                             <i class="bi bi-train-lightrail-front icon"></i>
                             <header class="sidebar-header">Transport</header>
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('amenities', this)">
+                        <button class="btn btn-secondary mb-2 w-100" data-section="amenities">
                             <i class="bi bi-shop icon"></i>
                             <header class="sidebar-header">Amenities</header>
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2 w-100" onclick="showContent('compare', this)">
+                        <button class="btn btn-secondary mb-2 w-100" data-section="compare">
                             <i class="bi bi-layout-split icon"></i>
                             <header class="sidebar-header">Compare Sites</header>
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-secondary mb-2 w-100" onclick="startMiniGame()">
+                        <button class="btn btn-secondary mb-2 w-100" data-section="game">
                             <i class="bi bi-controller icon"></i>
                         </button>
                     </li>
@@ -128,5 +128,6 @@
     <script src="js/amenities.js"></script>
     <script src="js/compare.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 </body>
 </html>

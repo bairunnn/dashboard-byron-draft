@@ -16,7 +16,7 @@ const projectCoordinates = {
     "Woodlands": [103.77255516423922, 1.4355446479153366]
 };
 
-function showContent(section, button) {
+function showContent(section) {
     if (section === 'explore') {
         showExploreContent();
     } else if (section === 'nature') {
@@ -27,6 +27,8 @@ function showContent(section, button) {
         showAmenitiesContent();
     } else if (section === 'compare') {
         showCompareContent();
+    } else if (section === 'game') {
+        startMiniGame();
     }
 
     map.flyTo({
@@ -34,7 +36,9 @@ function showContent(section, button) {
         zoom: 10,
         essential: true // ensures smooth zooming experience
     });
+}
 
+function handleSectionChange(section, button) {
     const buttons = document.querySelectorAll('.sidebar .nav button');
     buttons.forEach(btn => {
         btn.classList.remove('btn-dark');
@@ -42,7 +46,26 @@ function showContent(section, button) {
     });
     button.classList.remove('btn-secondary');
     button.classList.add('btn-dark');
+
+    if (section === 'compare') {
+        showCompareContent();
+    } else {
+        resetLayout();
+        // Call your existing showContent logic here for other sections
+        showContent(section); 
+    }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.sidebar .nav button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const section = button.getAttribute('data-section');
+            handleSectionChange(section, button);
+        });
+    });
+});
 
 let sitesData = null; // Global variable to hold GeoJSON data
 
