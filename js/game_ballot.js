@@ -44,12 +44,12 @@ function startMiniGame() {
     document.getElementById('ballot-button').addEventListener('click', function() {
         clickCount++;
         const randomChance = Math.random(); // Generates a number between 0 and 1
-        const resultText = randomChance < 0.2 ? "Congrats! Your ballot is successful!<br>Enjoy your married life! And your 99-year lease!" : "Your ballot is NOT successful!<br>There goes your $10!";
+        const resultText = randomChance < 0.3 ? "Congrats! Your ballot is successful!<br>Enjoy your married life! And your 99-year lease!" : "Your ballot is NOT successful!<br>There goes your $10!";
         document.getElementById('result').innerHTML = resultText;
         document.getElementById('attempts').innerHTML = "You have tried: " + clickCount + " times";
 
         // If the ballot is successful, trigger confetti
-        if (randomChance < 0.2) {
+        if (randomChance < 0.4) {
             jsConfetti.addConfetti({
                 emojis: ['🚻', '🏠', '🍆', '💫'],
                 emojiSize: 40,

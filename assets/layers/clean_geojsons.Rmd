@@ -46,3 +46,46 @@ libs_df <- libs_geojson_cleaned %>%
 
 st_write(libs_df, "PublicLibraries_cleaned.geojson")
 ```
+
+## Clean hawkers
+
+```{r}
+hawkers_geojson <- st_read("HawkerCentres.geojson")
+
+hawkers_geojson_cleaned <- hawkers_geojson %>%
+  mutate(Description = gsub("<[^>]+>", "", Description))
+```
+
+```{r}
+hawkers_df <- hawkers_geojson_cleaned %>%
+  mutate(Hawker_Name = sub(".*NAME (.*?) ADDRESSBUILDINGNAME.*", "\\1", Description)) %>%
+  select(Name, Hawker_Name)
+
+st_write(hawkers_df, "HawkerCentres_cleaned.geojson")
+```
+
+## Clean MRT
+
+```{r}
+mrt <- st_read("MRTLines_20240914.geojson")
+
+```
+
+```{r}
+mrt <- mrt %>%
+  mutate(Line_Number = case_when(
+    colour == "#df2826" ~ "North South Line",
+    colour == "#009544" ~ "East West Line",
+    colour == "#9900aa" ~ "North East Line",
+    colour == "#f99e0c" ~ "Circle Line",
+    colour == "#0055b7" ~ "Downtown Line",
+    colour == "#9c5917" ~ "Thompson East Coast Line",
+    colour == "#708270" ~ "LRT",
+    TRUE ~ NA_character_  # In case of unmatched colour, set to NA
+  ))
+
+```
+
+```{r}
+st_write(mrt, "MRTLines_20240914_cleaned.geojson")
+```

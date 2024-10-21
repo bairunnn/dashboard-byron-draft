@@ -61,13 +61,34 @@ map.on('load', function() {
         type: "line",
         source: {
             type: "geojson",
-            data: "assets/layers/MRTLines_20240914.geojson"
+            data: "assets/layers/MRTLines_20240914_cleaned.geojson"
         },
         paint: {
             "line-color": ["get", "colour"],
             "line-width": 2,
             "line-opacity": 0
         }
+    });
+
+    map.on('mousemove', 'MRTLines_20240914', function(e) {
+        // Check if fill-opacity is greater than 0 (layer is visible)
+        var opacity = map.getPaintProperty('MRTLines_20240914', 'line-opacity');
+        if (opacity > 0) {
+            var lineName = e.features[0].properties.Line_Number;
+            // Create a popup and set its position to the hovered polygon
+            popup
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div style="font-size: 1.4em; font-family: 'Barlow', sans-serif;">
+                        <strong>${lineName}</strong><br>
+                    </div>`)
+                .addTo(map);
+        }
+    });
+
+    // Remove the popup when the mouse leaves the polygon
+    map.on('mouseleave', 'MRTLines_20240914', function() {
+        popup.remove();
     });
 
     // 3. MRTStations_20240914_v1 (circle)
