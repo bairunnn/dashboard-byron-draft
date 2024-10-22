@@ -15,7 +15,7 @@ function showExploreContent() {
     `;
     const toggleMRT = document.getElementById('toggleMRT');
 
-    // Populate the dropdown with project names from the loaded GeoJSON data
+    // Populate the dropdown with BTO project names
     const projectDropdown = document.getElementById('project-dropdown');
     
     if (sitesData && sitesData.features) {
@@ -28,7 +28,7 @@ function showExploreContent() {
         });
     }
 
-    // Event listener for project selection
+    // Event listener for dropdown selection
     projectDropdown.addEventListener('change', function() {
         const selectedProjectName = this.value;
         const projectDetailsDiv = document.getElementById('project-details');
@@ -82,7 +82,6 @@ function showExploreContent() {
         if (selectedProjectName && projectCoordinates[selectedProjectName]) {
             const coordinates = projectCoordinates[selectedProjectName];
             
-            // Assuming `map` is the mapbox instance from map.js
             map.flyTo({
                 center: coordinates,
                 zoom: 15,
@@ -92,23 +91,22 @@ function showExploreContent() {
             map.flyTo({
                 center: [103.809038, 1.353424],
                 zoom: 10.5,
-                essential: true // this ensures smooth zooming experience
+                essential: true
             });
         }
     });
 
-    // Add click event to Sites_v6 layer to select a project
+    // Add click event to Sites_v6 map layer to select a project
     map.on('click', 'Sites_v6', function(e) {
         if (e.features.length > 0) {
             const clickedProjectName = e.features[0].properties.Project_Name;
             projectDropdown.value = clickedProjectName; // Update dropdown selection
 
-            // Trigger the change event manually to update project details
+            // Update project details
             projectDropdown.dispatchEvent(new Event('change'));
         }
     });
 
-    // Set the map layer visibility for exploring sites
     map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
     map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
     map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
@@ -133,8 +131,9 @@ function showExploreContent() {
     });
 }
 
-const toggleMrtButton = document.getElementById('toggle-mrt');
-let mrtVisible = false; // Track the visibility state
+// MRT/LRT toggle button
+let toggleMrtButton = document.getElementById('toggle-mrt');
+let mrtVisible = false; 
 
 toggleMrtButton.addEventListener('click', function() {
     mrtVisible = !mrtVisible; // Toggle the state

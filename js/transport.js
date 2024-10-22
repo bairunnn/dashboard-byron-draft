@@ -21,7 +21,7 @@ function showTransportContent() {
     let descriptionParagraph = document.getElementById('description');
     let comparisonDescription = document.getElementById('comparison-description');
 
-    // Initial MRT paint properties setup
+    // Initial paint properties setup
     map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
     map.setPaintProperty('MRTLines_20240914', 'line-opacity', 1);
     map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 1);
@@ -33,7 +33,7 @@ function showTransportContent() {
     map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     map.setPaintProperty('AllCyclingPathPCN', 'line-opacity', 0);
 
-    // Function to sort data and render the chart
+    // Function to render the bar chart
     function renderChart(dataProperty, sortDirection, comparisonType) {
         // Update the comparison description
         if (comparisonType === 'mrt') {
@@ -57,7 +57,7 @@ function showTransportContent() {
             });
         }
 
-        // Create the bar chart using D3
+        // Draw the bar chart using D3
         function drawChart() {
             d3.select("#bar-chart").select("svg").remove();
             let containerWidth = document.getElementById('bar-chart').clientWidth;
@@ -94,12 +94,12 @@ function showTransportContent() {
                 .style("font-size", "50%")
                 .style("font-family", "Barlow");
 
-            // Create a tooltip div
+            // Create tooltip
             let tooltip = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
-            // Create the bars without animation first
+            // Create the bars
             let bars = chart.selectAll(".bar")
                 .data(sortedData)
                 .enter()
@@ -228,7 +228,6 @@ function showTransportContent() {
         drawChart();
     }
     
-    
     // Event listeners for buttons
     document.getElementById('compare-mrt').addEventListener('click', function() {
         // Set active class
@@ -238,7 +237,7 @@ function showTransportContent() {
         descriptionParagraph.textContent = "Compare the proximity to MRT/LRT stations.";
         renderChart('NEAR_MRT', 'asc', 'mrt');
 
-        // Set MRT/LRT layer paint properties
+        // Paint properties for comparing MRT/LRT
         map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
         map.setPaintProperty('MRTLines_20240914', 'line-opacity', 1);
         map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 1);
@@ -259,7 +258,7 @@ function showTransportContent() {
         descriptionParagraph.textContent = "Compare the cycling paths.";
         renderChart('CYCLE_M', 'desc', 'cycling');
 
-        // Set cycling paths layer paint properties
+        // Paint properties for comparing cycling paths
         map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
         map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
         map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);

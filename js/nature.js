@@ -15,7 +15,7 @@ function showNatureContent() {
     let projectDropdown = document.getElementById('project-dropdown');
     let rankingParagraph = document.getElementById('ranking');
 
-    // Sort data based on NParks_KM2 in descending order
+    // Sort data based on NParks_KM2 in descending order (more parks = better!)
     let sortedData = sitesData.features.sort((a, b) => b.properties.NParks_KM2 - a.properties.NParks_KM2);
 
     if (sortedData) {
@@ -28,7 +28,7 @@ function showNatureContent() {
         });
     }
 
-    // Create the bar chart using D3
+    // Render the bar chart using D3
     function renderChart() {
         // Clear the previous SVG
         d3.select("#bar-chart").select("svg").remove();
@@ -38,7 +38,7 @@ function showNatureContent() {
 
         let svg = d3.select("#bar-chart")
             .append("svg")
-            .attr("width", containerWidth) // Full width
+            .attr("width", containerWidth)
             .attr("height", height);
 
         let margin = { top: 20, right: 20, bottom: 30, left: 120 };
@@ -69,7 +69,7 @@ function showNatureContent() {
             .style("font-size", "50%")
             .style("font-family", "Barlow");
     
-    // Create a tooltip div
+    // Create tooltip
     let tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
@@ -178,7 +178,7 @@ function showNatureContent() {
     map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     map.setPaintProperty('AllCyclingPathPCN', 'line-opacity', 0);
 
-    // Add click event to Sites_v6 layer to select a project
+    // Add click event to Sites_v6 map layer to select a project
     map.on('click', 'Sites_v6', function(e) {
         if (e.features.length > 0) {
             const clickedProjectName = e.features[0].properties.Project_Name;
