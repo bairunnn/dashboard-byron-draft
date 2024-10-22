@@ -21,7 +21,7 @@ function showAmenitiesContent() {
     let descriptionParagraph = document.getElementById('description');
     let comparisonDescription = document.getElementById('comparison-description');
 
-    // Initial hawkers paint properties setup
+    // Initial paint properties setup
     map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
     map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
     map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
@@ -33,7 +33,7 @@ function showAmenitiesContent() {
     map.setPaintProperty('ExistingHDBDissolved', 'fill-opacity', 0);
     map.setPaintProperty('AllCyclingPathPCN', 'line-opacity', 0);
 
-    // Function to sort data and render the chart
+    // Function to sort data and render chart
     function renderChart(dataProperty, sortDirection, comparisonType) {
         // Update the comparison description
         if (comparisonType === 'haw') {
@@ -99,7 +99,7 @@ function showAmenitiesContent() {
                 .attr("class", "tooltip")
                 .style("opacity", 0);
     
-            // Create the bars without animation first
+            // Create bars
             let bars = chart.selectAll(".bar")
                 .data(sortedData)
                 .enter()
@@ -116,7 +116,7 @@ function showAmenitiesContent() {
                     } else if (comparisonType === 'libra') {
                         return "#0688cd";  // Library color
                     } else {
-                        return "#c64a06";  // Default fallback color if needed
+                        return "#c64a06";
                     }
                 });
     
@@ -125,7 +125,7 @@ function showAmenitiesContent() {
                 .duration(700) // Animation duration
                 .attr("width", d => x(d.properties[dataProperty])); // Animate to final width
     
-            // Tooltip and event handling logic
+            // Tooltips
             bars.on("mouseover", function(event, d) {
                 tooltip.transition()
                     .duration(200)
@@ -229,7 +229,6 @@ function showAmenitiesContent() {
     
         drawChart();
     }
-    
     
     // Event listeners for buttons
     document.getElementById('compare-hawker').addEventListener('click', function() {

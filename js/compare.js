@@ -8,7 +8,7 @@ function resetLayout() {
     mapPanel.style.width = "60%";       // Default map panel width
     resetButton.style.display = 'block';
 
-    // Reset map properties to show all layers (adjust as necessary)
+    // Reset map properties too
     map.setPaintProperty('Sites_v6', 'fill-opacity', 0); // Hide or reset properties
     map.setPaintProperty('MRTLines_20240914', 'line-opacity', 1);
     map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 1);
@@ -27,7 +27,6 @@ function showCompareContent() {
 
     resetButton.style.display = 'none';
 
-    // Set the font size for the entire content panel
     contentPanel.innerHTML = `
         <h3>Compare Sites</h3>
         <div class="compare-buttons">
@@ -117,14 +116,13 @@ function showCompareContent() {
         </table>
     `;
     
-    // Populate the dropdowns with project names from your site data
     populateDropdowns();
 
     // Set widths for panels when the compare section is active
     contentPanel.style.width = "90%";  // Content panel takes 90%
     mapPanel.style.width = "0%";       // Map panel is hidden
 
-    // Update map properties for site comparison
+    // Update map properties for comparison section
     map.setPaintProperty('Sites_v6', 'fill-opacity', 1);
     map.setPaintProperty('MRTLines_20240914', 'line-opacity', 0);
     map.setPaintProperty('MRTStations_20240914_v1', 'text-opacity', 0);
@@ -363,7 +361,6 @@ function populateDropdowns() {
     const site2Dropdown = document.getElementById('site2-dropdown');
     const site3Dropdown = document.getElementById('site3-dropdown');
 
-    // Assuming `sitesData` is available and contains the project names
     sitesData.features.forEach(site => {
         const option = document.createElement('option');
         option.value = site.properties.Project_Name;
