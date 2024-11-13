@@ -65,7 +65,7 @@ map.on('load', function() {
         type: "line",
         source: {
             type: "geojson",
-            data: "assets/layers/MRTLines_20241105_future.geojson"
+            data: "assets/layers/MRTLines_20241113_future.geojson"
         },
         paint: {
             "line-color": ["get", "colour"],
@@ -78,7 +78,7 @@ map.on('load', function() {
         // Check if fill-opacity is greater than 0 (layer is visible)
         var opacity = map.getPaintProperty('MRTLines_20240914', 'line-opacity');
         if (opacity > 0) {
-            var lineName = e.features[0].properties.Line_Number;
+            var lineName = e.features[0].properties.lineName;
             // Create a popup and set its position to the hovered polygon
             popup
                 .setLngLat(e.lngLat)
